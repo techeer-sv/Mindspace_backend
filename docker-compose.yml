@@ -5,12 +5,12 @@ services:
     container_name: mysql
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
     restart: always
     environment:
-      MYSQL_DATABASE: mindspace
+      MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     command: # 명령어 실행
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -25,11 +25,11 @@ services:
 ##     서브 모듈에서 확인할때 !docker-compose를 최상위 폴더로 빼야한다!
 #    build:
 #       context: ./Mindspace_backend
-#       dockerfile: Dockerfile
+#       Dockerfile: Dockerfile
     environment:
        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mindspace
        SPRING_DATASOURCE_USER: root
-       SPRING_DATASOURCE_PASSWORD: password
+       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
     expose:
        - 8080
     ports:

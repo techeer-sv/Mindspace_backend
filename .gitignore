@@ -125,6 +125,7 @@ Temporary Items
 
 #environment variable of Jwt secret key and db
 .yml
+.env
 application-oauth.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,intellij
 
