@@ -1,8 +1,6 @@
 package com.mindspace.backend.domain.node.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +8,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name="node")
+@Builder
+@AllArgsConstructor
 public class Node {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
