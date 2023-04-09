@@ -3,11 +3,10 @@ package com.mindspace.backend.domain.user.dto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-public class UserRequestDto {
+public class UserSignupRequestDto {
     @NotNull
     private String email;
 
