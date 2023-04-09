@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    command: # 명령어 실행
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mindspace-db:/usr/src/mysql
+
+  backend:
+
+    container_name: backend
+##      mindspace_backend에서 확인할 때
+    build: .
+##     서브 모듈에서 확인할때 !docker-compose를 최상위 폴더로 빼야한다!
+#    build:
+#       context: ./Mindspace_backend
+#       Dockerfile: Dockerfile
+    environment:
+       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mindspace
+       SPRING_DATASOURCE_USER: root
+       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    expose:
+       - 8080
+    ports:
+       - "8080:8080"
+    depends_on:
+       - mysql
+
+#  frontend:
+#    container_name: frontend
+#    restart: unless-stopped
+#    build:
+#      context: ./Mindspace_front
+#    command: ["yarn", "start"]
+#    ports:
+#      - 3000:3000
+#    volumes:
+#      - ./Mindspace_front/:/frontend/
+#      - ./Mindspace_front/node_modules/:/frontend/node_modules
+#    environment:
+#      - CI=true
+#      - CHOKIDAR_USEPOLLING=true
+#      - REACT_APP_BACKEND_URL=http://localhost:8000
+#    tty: true
+
+volumes:
+  mindspace-db:
