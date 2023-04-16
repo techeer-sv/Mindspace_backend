@@ -1,5 +1,6 @@
 package com.mindspace.backend.domain.user.controller;
 
+import com.mindspace.backend.domain.user.dto.UserLoginRequestDto;
 import com.mindspace.backend.domain.user.dto.UserMapper;
 import com.mindspace.backend.domain.user.dto.UserResponseDto;
 import com.mindspace.backend.domain.user.dto.UserSignupRequestDto;
@@ -22,6 +23,14 @@ public class UserController {
             @RequestBody UserSignupRequestDto userSignupRequestDto) {
         User signupResult = USER_SERVICE.signupUser(userSignupRequestDto);
         return USER_MAPPER.DtoFromEntity(signupResult);
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public UserResponseDto loginUser(
+            @RequestBody UserLoginRequestDto userLoginRequestDto) {
+        User loginResult = USER_SERVICE.loginUser(userLoginRequestDto);
+        return USER_MAPPER.DtoFromEntity(loginResult);
     }
 
 }
