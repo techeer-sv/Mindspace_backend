@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/mindspace?useUnicode=true&useSSL=false&createDatabaseIfNotExist=true&characterSetResults=UTF-8&characterEncoding=UTF-8&useLegacyDatetimeCode=false
+    username: root
+    password: password
