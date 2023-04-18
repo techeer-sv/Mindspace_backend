@@ -10,6 +10,7 @@ import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,11 +24,17 @@ public class UserService {
         return USER_REPOSITORY.save(USER_MAPPER.DtoToEntity(userSignupRequestDto));
     };
 
+
+
     @Transactional
     public User loginUser(UserLoginRequestDto userLoginRequestDto) {
         Optional<User> findByEmail = USER_REPOSITORY.findByEmail(userLoginRequestDto.getEmail());
         User user = findByEmail.get();
         //todo : jwt token
         return user;
+    }
+
+    public List<User> getAllUser() {
+        return USER_REPOSITORY.findAll();
     }
 }

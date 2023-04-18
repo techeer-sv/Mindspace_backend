@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/user")
@@ -31,6 +33,12 @@ public class UserController {
             @RequestBody UserLoginRequestDto userLoginRequestDto) {
         User loginResult = USER_SERVICE.loginUser(userLoginRequestDto);
         return USER_MAPPER.DtoFromEntity(loginResult);
+    }
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> getAllUser(){
+        return USER_SERVICE.getAllUser();
     }
 
 }
