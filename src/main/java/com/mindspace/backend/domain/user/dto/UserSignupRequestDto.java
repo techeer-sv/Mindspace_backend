@@ -1,19 +1,18 @@
 package com.mindspace.backend.domain.user.dto;
 
-import lombok.AllArgsConstructor;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
-
 @Getter
 @Builder
-@AllArgsConstructor
-public class UserResponseDto {
-    private int id;
-
+public class UserSignupRequestDto {
+    @NotNull
     private String email;
 
+    @NotNull
     private String password;
 
+    @NotNull
     private String nickname;
 }
