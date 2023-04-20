@@ -9,7 +9,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class UserResponseDto {
-
     private int id;
 
     private String email;

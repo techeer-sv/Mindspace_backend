@@ -6,7 +6,6 @@ import com.mindspace.backend.domain.user.dto.UserSignupRequestDto;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,12 +23,19 @@ public class UserService {
         return USER_REPOSITORY.save(USER_MAPPER.DtoToEntity(userSignupRequestDto));
     };
 
-
-
     @Transactional
     public User loginUser(UserLoginRequestDto userLoginRequestDto) {
         Optional<User> findByEmail = USER_REPOSITORY.findByEmail(userLoginRequestDto.getEmail());
+
+        if (findByEmail.isEmpty()) {
+            throw new NullPointerException("해당 이메일로 가입한 사용자 없음");
+        }
+
         User user = findByEmail.get();
+        if (!user.getPassword().equals(userLoginRequestDto.getPassword())) {
+            throw new NullPointerException("비밀번호 오류");
+        }
+
         //todo : jwt token
         return user;
     }
@@ -37,4 +43,5 @@ public class UserService {
     public List<User> getAllUser() {
         return USER_REPOSITORY.findAll();
     }
+
 }
