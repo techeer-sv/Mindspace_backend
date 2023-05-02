@@ -1,17 +1,15 @@
-package com.mindspace.backend.domain.node.dto;
+package com.mindspace.backend.domain.board.dto;
 
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Column;
-
 @Getter
 @Builder
-public class NodeRequestDto {
+public class BoardRequestDto {
 
     @NotNull
-    private String nodeName;
+    private String boardname;
 
     @NotNull
     private String title;
@@ -21,4 +19,7 @@ public class NodeRequestDto {
 
     @NotNull
     private int userId;
+
+    @NotNull
+    private int nodeId;
 }

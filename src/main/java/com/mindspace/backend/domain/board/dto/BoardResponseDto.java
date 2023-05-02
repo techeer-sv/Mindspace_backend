@@ -1,23 +1,23 @@
-package com.mindspace.backend.domain.node.dto;
+package com.mindspace.backend.domain.board.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Column;
-
 @Getter
 @Builder
 @AllArgsConstructor
-public class NodeResponseDto {
+public class BoardResponseDto {
 
     private int id;
 
-    private String nodeName;
+    private String boardName;
 
     private String title;
 
     private String content;
 
     private int userId;
+
+    private int nodeId;
 }

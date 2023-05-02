@@ -1,4 +1,4 @@
-package com.mindspace.backend.domain.node.entity;
+package com.mindspace.backend.domain.board.entity;
 
 import lombok.*;
 
@@ -7,21 +7,23 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="node")
+@Table(name="board")
 @Builder
 @AllArgsConstructor
-public class Node {
+public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "node_id")
+    @Column(name = "board_id")
     private int id;
-    @Column(name="node_name", nullable = false)
-    private String nodeName;
+    @Column(name="board_name", nullable = false)
+    private String boardName;
     @Column(name="title", nullable = false)
     private String title;
     @Column(name="content", nullable = false)
     private String content;
     @Column(name="userId", nullable = false)
     private int userId;
+    @Column(name="nodeId", nullable = false)
+    private int nodeId;
 
 }
