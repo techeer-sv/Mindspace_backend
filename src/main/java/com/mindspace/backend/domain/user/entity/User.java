@@ -1,5 +1,6 @@
 package com.mindspace.backend.domain.user.entity;
 
+import com.mindspace.backend.global.common.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,11 +13,11 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "member")
-public class User {
+@Table(name = "user")
+public class User extends Timestamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "user_id")
     private int id;
 
     @Column(name = "email", nullable = false)
