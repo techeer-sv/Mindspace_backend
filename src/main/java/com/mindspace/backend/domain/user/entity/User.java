@@ -28,4 +28,8 @@ public class User extends Timestamp {
 
     @Column(name = "nickname", nullable = false)
     private String nickname;
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private boolean isActive = true; //기본 값으로 true 넣기
 }
