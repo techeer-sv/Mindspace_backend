@@ -33,4 +33,11 @@ public class BoardService {
         Board foundBaord = BOARD_REPOSITORY.findById(id).orElseThrow(NullPointerException::new);
         return foundBaord;
     }
+
+    public Board updateBoard(BoardRequestDto boardUpdate, int id) {
+        Board board = IsBoardExisted(id);
+        board.update(boardUpdate);
+        return BOARD_REPOSITORY.save(board);
+    }
+
 }

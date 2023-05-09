@@ -1,5 +1,6 @@
 package com.mindspace.backend.domain.board.entity;
 
+import com.mindspace.backend.domain.board.dto.BoardRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,5 +27,11 @@ public class Board {
 
     public static void delete() {
     }
+
+    public void update(BoardRequestDto boardUpdate) {
+        this.title = boardUpdate.getTitle();
+        this.content = boardUpdate.getContent();
+    }
+
 
 }
