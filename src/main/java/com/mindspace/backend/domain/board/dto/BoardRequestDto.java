@@ -8,8 +8,6 @@ import lombok.Getter;
 @Builder
 public class BoardRequestDto {
 
-    @NotNull
-    private String boardname;
 
     @NotNull
     private String title;

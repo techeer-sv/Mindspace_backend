@@ -15,8 +15,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
     private int id;
-    @Column(name="board_name", nullable = false)
-    private String boardName;
     @Column(name="title", nullable = false)
     private String title;
     @Column(name="content", nullable = false)
@@ -25,5 +23,8 @@ public class Board {
     private int userId;
     @Column(name="nodeId", nullable = false)
     private int nodeId;
+
+    public static void delete() {
+    }
 
 }
