@@ -40,4 +40,7 @@ public class BoardService {
         return BOARD_REPOSITORY.save(board);
     }
 
+    public Board findOneBoard(int id) {
+        return BOARD_REPOSITORY.findById(id).orElseThrow(RuntimeException::new);
+    }
 }

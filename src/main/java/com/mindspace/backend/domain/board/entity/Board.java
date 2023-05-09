@@ -32,6 +32,4 @@ public class Board {
         this.title = boardUpdate.getTitle();
         this.content = boardUpdate.getContent();
     }
-
-
 }

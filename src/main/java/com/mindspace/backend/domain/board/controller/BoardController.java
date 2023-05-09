@@ -29,14 +29,13 @@ public class BoardController {
         return BOARD_SERVICE.getAllBoard();
     }
 
-    /*
     // 노드 글 정보 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public  List<Board>{
-        return;
+    public ResponseEntity<Board> findOneBoard(@PathVariable int id){
+        Board board = BOARD_SERVICE.findOneBoard(id);
+        return new ResponseEntity<>(board, HttpStatus.OK);
     }
-    */
 
     // 게시글 작성
     @PostMapping("/{id}")
@@ -62,6 +61,4 @@ public class BoardController {
         Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, id);
         return new ResponseEntity<>(BOARD_MAPPER.DtoFromEntity(updateBoard), HttpStatus.OK);
     }
-
-
 }
