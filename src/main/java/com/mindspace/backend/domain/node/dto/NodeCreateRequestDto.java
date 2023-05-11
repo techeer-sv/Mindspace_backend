@@ -1,13 +1,12 @@
 package com.mindspace.backend.domain.node.dto;
 
-import lombok.AllArgsConstructor;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-@AllArgsConstructor
-public class NodeResponseDto {
-    private Integer id;
+public class NodeCreateRequestDto {
+    @NotNull
     private String name;
 }
