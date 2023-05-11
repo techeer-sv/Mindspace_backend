@@ -20,9 +20,9 @@ public class Board {
     private String title;
     @Column(name="content", nullable = false)
     private String content;
-    @Column(name="userId", nullable = false)
+    @Column(name="user_id", nullable = false)
     private int userId;
-    @Column(name="nodeId", nullable = false)
+    @Column(name="node_id", nullable = false)
     private int nodeId;
 
     public static void delete() {
