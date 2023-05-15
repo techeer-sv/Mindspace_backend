@@ -41,8 +41,8 @@ public class BoardController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public BoardResponseDto createBoard(
-            @RequestBody BoardRequestDto boardRequestDto) {
-        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto);
+            @RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId) {
+        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId);
         return BOARD_MAPPER.DtoFromEntity(createResult);
     }
 
