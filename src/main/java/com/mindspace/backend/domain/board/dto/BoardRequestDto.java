@@ -3,8 +3,10 @@ package com.mindspace.backend.domain.board.dto;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
 public class BoardRequestDto {
 
@@ -15,7 +17,7 @@ public class BoardRequestDto {
     @NotNull
     private String content;
 
-    @NotNull
+   @NotNull
     private int userId;
 
     @NotNull
