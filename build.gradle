@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'javax.validation:validation-api:2.0.1.Final' // @Valid 어노테이션을 사용하기 위한 javax.validation 패키지의 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.h2database:h2:1.4.200'
