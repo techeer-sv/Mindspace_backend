@@ -20,7 +20,8 @@ public class BoardService {
         return BOARD_REPOSITORY.findAll();
     }
 
-    public Board createBoard(BoardRequestDto boardRequestDto) {
+    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
+        boardRequestDto.setUserId(userId);
         return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(boardRequestDto));
     }
 
