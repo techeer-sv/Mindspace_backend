@@ -44,4 +44,9 @@ public class UserService {
         return USER_REPOSITORY.findAll();
     }
 
+    public String getUserNickname(int id) {
+        Optional<User> findById = USER_REPOSITORY.findById(id);
+        User user = findById.get();
+        return user.getNickname();
+    }
 }

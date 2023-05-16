@@ -41,4 +41,10 @@ public class UserController {
         return USER_SERVICE.getAllUser();
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String getUserNickname(@PathVariable int id){
+        return USER_SERVICE.getUserNickname(id);
+    }
+
 }
