@@ -38,7 +38,7 @@ public class BoardController {
     }
 
     // 게시글 작성
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BoardResponseDto createBoard(
             @RequestBody BoardRequestDto boardRequestDto) {
