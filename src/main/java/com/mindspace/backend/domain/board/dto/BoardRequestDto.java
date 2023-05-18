@@ -23,6 +23,9 @@ public class BoardRequestDto {
     @NotNull
     private int nodeId;
 
+    public void setUserId(int userId) {
+    }
+
     public static class BoardRequestDtoBuilder {
         public BoardRequestDtoBuilder userId(int userId) {
             this.userId = userId;

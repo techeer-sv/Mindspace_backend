@@ -21,8 +21,14 @@ public class BoardService {
     }
 
     public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
-        boardRequestDto.setUserId(userId);
-        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(boardRequestDto));
+        BoardRequestDto updatedDto = BoardRequestDto.builder()
+                .title(boardRequestDto.getTitle())
+                .content(boardRequestDto.getContent())
+                .userId(userId)
+                .nodeId(boardRequestDto.getNodeId())
+                .build();
+
+        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(updatedDto));
     }
 
 //    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {

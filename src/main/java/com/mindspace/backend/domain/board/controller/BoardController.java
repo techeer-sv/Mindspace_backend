@@ -40,9 +40,9 @@ public class BoardController {
     // 게시글 작성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardResponseDto createBoard(
-            @RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId) {
-        return BOARD_MAPPER.DtoToEntity(boardRequestDto.builder().userId(userId).build());
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId) {
+        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId);
+        return BOARD_MAPPER.DtoFromEntity(createResult);
     }
 
     // 게시글 삭제
