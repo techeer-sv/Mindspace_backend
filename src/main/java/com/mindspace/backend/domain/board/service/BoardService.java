@@ -30,6 +30,15 @@ public class BoardService {
         return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(updatedDto));
     }
 
+//    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
+//        BoardRequestDto dtoWithUserId = boardRequestDto.toBuilder().userId(userId).build();
+//        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(dtoWithUserId));
+//    }
+
+//    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
+//        return BOARD_REPOSITORY.save(boardRequestDto.toBuilder().userId(userId).build());
+//    }
+
     public void deleteBoard(int id) {
         Board board = IsBoardExisted(id);
         BOARD_REPOSITORY.deleteById(board.getId());
