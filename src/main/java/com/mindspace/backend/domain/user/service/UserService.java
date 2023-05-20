@@ -1,8 +1,6 @@
 package com.mindspace.backend.domain.user.service;
 
-import com.mindspace.backend.domain.user.dto.UserLoginRequestDto;
-import com.mindspace.backend.domain.user.dto.UserMapper;
-import com.mindspace.backend.domain.user.dto.UserSignupRequestDto;
+import com.mindspace.backend.domain.user.dto.*;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +41,16 @@ public class UserService {
     public List<User> getAllUser() {
         return USER_REPOSITORY.findAll();
     }
+
+    public UserNicknameResponseDto getUserNickname(int userId) {
+        User user = isUserExisted(userId);
+        return UserMapper.nicknameDtoFromEntity(user);
+    }
+
+    public User isUserExisted(int id) {
+        User user = USER_REPOSITORY.findById(id).orElseThrow(() -> new NullPointerException());
+        return user;
+    }
+
 
 }
