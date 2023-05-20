@@ -2,6 +2,7 @@ package com.mindspace.backend.domain.node.entity;
 
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.global.common.Timestamp;
+import com.mindspace.backend.domain.board.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,4 +25,7 @@ public class Node extends Timestamp {
 
     @Column(name= "node_name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "node")
+    private List<Board> boards;
 }
