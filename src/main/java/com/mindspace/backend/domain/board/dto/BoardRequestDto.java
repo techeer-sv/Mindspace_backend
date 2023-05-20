@@ -18,13 +18,17 @@ public class BoardRequestDto {
     private String content;
 
     @NotNull
-    private int userId;
+    private int userId; // int 타입의 필드는 기본적으로 null이 아닌 값을 가지므로 @NotNull 어노테이션은 필요하지 않음
 
     @NotNull
     private int nodeId;
 
-    public void setUserId(int userId) {
-    }
+//    public void setUserId(int userId){
+//    }
+
+//    public void setNodeId(int nodeId) {
+//        this.nodeId = nodeId;
+//    }
 
     public static class BoardRequestDtoBuilder {
         public BoardRequestDtoBuilder userId(int userId) {
@@ -32,28 +36,4 @@ public class BoardRequestDto {
             return this;
         }
     }
-//    public static class Builder {
-//        private int userId;
-//        // 다른 필드들...
-//
-//        public Builder userId(int userId) {
-//            this.userId = userId;
-//            return this;
-//        }
-//
-//        // 다른 필드들의 빌더 메서드들...
-//
-//        public BoardRequestDto build() {
-//            return new BoardRequestDto(this);
-//        }
-//    }
-//
-//    private BoardRequestDto(Builder builder) {
-//        this.userId = builder.userId;
-//        // 다른 필드들...
-//    }
-//
-//    public static Builder builder() {
-//        return new Builder();
-//    }
 }
