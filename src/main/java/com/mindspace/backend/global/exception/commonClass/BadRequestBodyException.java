@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestBodyException extends RuntimeException {
-  private int errorCode;
+  private int statusCode;
 
-  public BadRequestBodyException(String message, ErrorCode statusCodes) {
+  private String message;
+
+  public BadRequestBodyException(ErrorCode errorCode, String message) {
     super(message);
-    this.errorCode = statusCodes.getStatusCode();
+    this.statusCode = errorCode.getStatusCode();
+    this.message = message;
   }
 }

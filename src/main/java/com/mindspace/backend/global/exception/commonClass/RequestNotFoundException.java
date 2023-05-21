@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class RequestNotFoundException extends RuntimeException {
-  private int errorCode;
+  private int statusCode;
 
-  public RequestNotFoundException(String message, ErrorCode statusCodes) {
+  private String message;
+
+  public RequestNotFoundException(ErrorCode statusCodes,String message) {
     super(message);
-    this.errorCode = statusCodes.getStatusCode();
+    this.statusCode = statusCodes.getStatusCode();
+    this.message = message;
   }
 }
