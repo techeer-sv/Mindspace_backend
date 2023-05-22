@@ -23,7 +23,7 @@ public class BoardMapper {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .userId(board.getUser().getId())
-                .nodeId(board.getId())
+                .nodeId(board.getNode().getId())
                 .build();
     }
 }

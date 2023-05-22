@@ -24,6 +24,6 @@ public class Node {
     @Column(name= "node_name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "node")
-    private List<Board> boards;
+//    @OneToMany(mappedBy = "node")
+//    private List<Board> boards;
 }

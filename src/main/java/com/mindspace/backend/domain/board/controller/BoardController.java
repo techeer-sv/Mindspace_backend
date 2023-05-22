@@ -29,7 +29,7 @@ public class BoardController {
         return BOARD_SERVICE.getAllBoard();
     }
 
-    // 노드 글 정보 조회
+    // 게시글 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Board> findOneBoard(@PathVariable int id){
@@ -49,7 +49,9 @@ public class BoardController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBoard(@PathVariable int id) {
-        BOARD_SERVICE.deleteBoard(id);
+        BOARD_SERVICE.deleteBoard(id);{
+            BOARD_SERVICE.deleteBoard(id);
+        }
     }
 
     // 게시글 수정
