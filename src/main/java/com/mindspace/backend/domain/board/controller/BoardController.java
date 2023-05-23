@@ -49,9 +49,7 @@ public class BoardController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBoard(@PathVariable int id) {
-        BOARD_SERVICE.deleteBoard(id);{
-            BOARD_SERVICE.deleteBoard(id);
-        }
+        BOARD_SERVICE.deleteBoard(id);
     }
 
     // 게시글 수정
