@@ -1,6 +1,7 @@
 package com.mindspace.backend.domain.node.entity;
 
 import com.mindspace.backend.domain.board.entity.Board;
+import com.mindspace.backend.global.common.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name= "node")
-public class Node {
+public class Node extends Timestamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "node_id")
@@ -23,7 +24,4 @@ public class Node {
 
     @Column(name= "node_name", nullable = false)
     private String name;
-
-//    @OneToMany(mappedBy = "node")
-//    private List<Board> boards;
 }

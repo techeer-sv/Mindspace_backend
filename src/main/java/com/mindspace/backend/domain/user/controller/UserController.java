@@ -1,9 +1,6 @@
 package com.mindspace.backend.domain.user.controller;
 
-import com.mindspace.backend.domain.user.dto.UserLoginRequestDto;
-import com.mindspace.backend.domain.user.dto.UserMapper;
-import com.mindspace.backend.domain.user.dto.UserResponseDto;
-import com.mindspace.backend.domain.user.dto.UserSignupRequestDto;
+import com.mindspace.backend.domain.user.dto.*;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +36,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public List<User> getAllUser(){
         return USER_SERVICE.getAllUser();
+    }
+
+    @GetMapping("/nickname")
+    @ResponseStatus(HttpStatus.OK)
+    public UserNicknameResponseDto getUserNickname(@RequestHeader("Authorization") int userId){
+        return USER_SERVICE.getUserNickname(userId);
     }
 
 }
