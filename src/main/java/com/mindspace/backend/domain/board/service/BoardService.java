@@ -2,6 +2,7 @@ package com.mindspace.backend.domain.board.service;
 
 import com.mindspace.backend.domain.board.dto.BoardMapper;
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
+import com.mindspace.backend.domain.board.dto.BoardResponseDto;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
