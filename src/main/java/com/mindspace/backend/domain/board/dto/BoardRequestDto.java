@@ -19,7 +19,6 @@ public class BoardRequestDto {
     @NotNull
     private int userId; // int 타입의 필드는 기본적으로 null이 아닌 값을 가지므로 @NotNull 어노테이션은 필요하지 않음
 
-    @NotNull
     private int nodeId;
 
 //    public void setUserId(int userId){

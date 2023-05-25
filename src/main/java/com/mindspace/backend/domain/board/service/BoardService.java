@@ -19,25 +19,19 @@ public class BoardService {
         return BOARD_REPOSITORY.findAll();
     }
 
-    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
+    public Board createBoard(BoardRequestDto boardRequestDto, int userId, Integer nodeId) {
+        nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
         BoardRequestDto updatedDto = BoardRequestDto.builder()
                 .title(boardRequestDto.getTitle())
                 .content(boardRequestDto.getContent())
                 .userId(userId)
-                .nodeId(boardRequestDto.getNodeId())
+                .nodeId(nodeId)
                 .build();
 
         return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(updatedDto));
     }
 
-//    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
-//        BoardRequestDto dtoWithUserId = boardRequestDto.toBuilder().userId(userId).build();
-//        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(dtoWithUserId));
-//    }
-
-//    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
-//        return BOARD_REPOSITORY.save(boardRequestDto.toBuilder().userId(userId).build());
-//    }
+    private static final int DEFAULT_NODE_ID = 1;
 
     public void deleteBoard(int id) {
         Board board = IsBoardExisted(id);

@@ -47,10 +47,13 @@ public class BoardController {
     // 게시글 작성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId) {
-        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId);
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
+        nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
+        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId, nodeId);
         return BOARD_MAPPER.DtoFromEntity(createResult);
     }
+
+    private static final int DEFAULT_NODE_ID = 1;
 
     // 게시글 삭제
     @DeleteMapping("/{id}")
