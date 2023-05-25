@@ -1,12 +1,8 @@
 package com.mindspace.backend.domain.board.dto;
 
-import com.mindspace.backend.domain.node.entity.Node;
-import com.mindspace.backend.domain.user.entity.User;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
 @Builder
