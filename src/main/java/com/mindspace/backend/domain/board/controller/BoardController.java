@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,16 +26,24 @@ public class BoardController {
     // 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<Board> getAllBoard(){
-        return BOARD_SERVICE.getAllBoard();
+    public List<BoardResponseDto> getAllBoard(){
+        List<Board> boardlist = BOARD_SERVICE.getAllBoard();
+        List<BoardResponseDto> boardResponseList = new ArrayList<>();
+
+        for (Board board : boardlist) {
+            BoardResponseDto boardResponseDto = BOARD_MAPPER.DtoFromEntity(board);
+            boardResponseList.add(boardResponseDto);
+        }
+
+        return boardResponseList;
     }
 
     // 게시글 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Board> findOneBoard(@PathVariable int id){
+    public BoardResponseDto findOneBoard(@PathVariable int id){
         Board board = BOARD_SERVICE.findOneBoard(id);
-        return new ResponseEntity<>(board, HttpStatus.OK);
+        return BOARD_MAPPER.DtoFromEntity(board);
     }
 
     // 게시글 작성
