@@ -1,6 +1,7 @@
 package com.mindspace.backend.domain.board.entity;
 
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
+import com.mindspace.backend.global.common.Timestamp;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Table(name="board")
 @Builder
 @AllArgsConstructor
-public class Board {
+public class Board extends Timestamp {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
