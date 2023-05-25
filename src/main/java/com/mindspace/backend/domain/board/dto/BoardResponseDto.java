@@ -15,7 +15,7 @@ public class BoardResponseDto {
 
     private String content;
 
-    private int userId;
+    private String userNickname;
 
     private int nodeId;
 }
