@@ -1,6 +1,8 @@
 package com.mindspace.backend.domain.board.entity;
 
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
+import com.mindspace.backend.domain.node.entity.Node;
+import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.global.common.Timestamp;
 import lombok.*;
 
@@ -17,17 +19,20 @@ public class Board extends Timestamp {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
     private int id;
+
     @Column(name="title", nullable = false)
     private String title;
+
     @Column(name="content", nullable = false)
     private String content;
-    @Column(name="user_id", nullable = false)
-    private int userId;
-    @Column(name="node_id", nullable = false)
-    private int nodeId;
 
-    public static void delete() {
-    }
+    @OneToOne
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "node_id", referencedColumnName = "node_id")
+    private Node node;
 
     public void update(BoardRequestDto boardUpdate) {
         this.title = boardUpdate.getTitle();

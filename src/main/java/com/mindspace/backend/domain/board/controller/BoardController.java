@@ -6,13 +6,12 @@ import com.mindspace.backend.domain.board.dto.BoardResponseDto;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,24 +24,31 @@ public class BoardController {
     // 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<Board> getAllBoard(){
-        return BOARD_SERVICE.getAllBoard();
+    public List<BoardResponseDto> getAllBoard(){
+        List<Board> boardlist = BOARD_SERVICE.getAllBoard();
+        List<BoardResponseDto> boardResponseList = new ArrayList<>();
+
+        for (Board board : boardlist) {
+            BoardResponseDto boardResponseDto = BOARD_MAPPER.DtoFromEntity(board);
+            boardResponseList.add(boardResponseDto);
+        }
+
+        return boardResponseList;
     }
 
-    // 노드 글 정보 조회
+    // 게시글 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Board> findOneBoard(@PathVariable int id){
+    public BoardResponseDto findOneBoard(@PathVariable int id){
         Board board = BOARD_SERVICE.findOneBoard(id);
-        return new ResponseEntity<>(board, HttpStatus.OK);
+        return BOARD_MAPPER.DtoFromEntity(board);
     }
 
     // 게시글 작성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardResponseDto createBoard(
-            @RequestBody BoardRequestDto boardRequestDto) {
-        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto);
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId) {
+        Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId);
         return BOARD_MAPPER.DtoFromEntity(createResult);
     }
 

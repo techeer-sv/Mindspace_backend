@@ -1,5 +1,6 @@
 package com.mindspace.backend.domain.node.entity;
 
+import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.global.common.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter

@@ -7,7 +7,6 @@ import com.mindspace.backend.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -20,8 +19,15 @@ public class BoardService {
         return BOARD_REPOSITORY.findAll();
     }
 
-    public Board createBoard(BoardRequestDto boardRequestDto) {
-        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(boardRequestDto));
+    public Board createBoard(BoardRequestDto boardRequestDto, int userId) {
+        BoardRequestDto updatedDto = BoardRequestDto.builder()
+                .title(boardRequestDto.getTitle())
+                .content(boardRequestDto.getContent())
+                .userId(userId)
+                .nodeId(boardRequestDto.getNodeId())
+                .build();
+
+        return BOARD_REPOSITORY.save(BOARD_MAPPER.DtoToEntity(updatedDto));
     }
 
     public void deleteBoard(int id) {
