@@ -27,7 +27,7 @@ public class Board extends Timestamp {
     private String content;
 
     @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "member_id")
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
