@@ -5,19 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
-public class BoardResponseDto {
-
-    private int id;
+public class UserBoardResponseDto {
 
     private String title;
 
     private String content;
 
-    private String userNickname;
-
-    private int nodeId;
+    private LocalDateTime updatedAt;
 
 }

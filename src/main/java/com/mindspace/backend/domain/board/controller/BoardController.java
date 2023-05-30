@@ -3,9 +3,15 @@ package com.mindspace.backend.domain.board.controller;
 import com.mindspace.backend.domain.board.dto.BoardMapper;
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
 import com.mindspace.backend.domain.board.dto.BoardResponseDto;
+import com.mindspace.backend.domain.board.dto.UserBoardResponseDto;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.service.BoardService;
+import com.mindspace.backend.domain.node.entity.Node;
+import com.mindspace.backend.domain.node.repository.NodeRepository;
+import com.mindspace.backend.domain.user.entity.User;
+import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +24,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/boards")
 public class BoardController {
+    private final NodeRepository NODE_REPOSITORY;
     private final BoardService BOARD_SERVICE;
     private final BoardMapper BOARD_MAPPER;
+    private final UserRepository USER_REPOSITORY;
 
     // 전체 게시글 조회
     @GetMapping("/all")
@@ -37,23 +45,45 @@ public class BoardController {
     }
 
     // 게시글 조회
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public BoardResponseDto findOneBoard(@PathVariable int id){
-        Board board = BOARD_SERVICE.findOneBoard(id);
-        return BOARD_MAPPER.DtoFromEntity(board);
+//    @GetMapping("/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public BoardResponseDto findOneBoard(@PathVariable int id){
+//        Board board = BOARD_SERVICE.findOneBoard(id);
+//        return BOARD_MAPPER.DtoFromEntity(board);
+//    }
+
+    //“사용자”가 특정 노드 게시물 조회
+    @GetMapping
+    public ResponseEntity<UserBoardResponseDto> findOneBoard(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
+        User user = USER_REPOSITORY.findById(userId).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Board board = BOARD_SERVICE.findOneBoardByNodeIdAndUserId(nodeId, userId);
+        if (board == null) {
+            return ResponseEntity.notFound().build();
+        }
+        UserBoardResponseDto userBoardResponseDto = BOARD_MAPPER.UserDtoFromEntity(board);
+        return ResponseEntity.ok(userBoardResponseDto);
     }
 
     // 게시글 작성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
-        nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
+        if (nodeId == null) {
+            throw new IllegalArgumentException("node_id is required");
+        }
+
+        Node node = NODE_REPOSITORY.findById(nodeId).orElse(null);
+        if (node == null) {
+            throw new IllegalArgumentException("Invalid node_id: " + nodeId);
+        }
+
         Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId, nodeId);
         return BOARD_MAPPER.DtoFromEntity(createResult);
     }
-
-    private static final int DEFAULT_NODE_ID = 1;
 
     // 게시글 삭제
     @DeleteMapping("/{id}")

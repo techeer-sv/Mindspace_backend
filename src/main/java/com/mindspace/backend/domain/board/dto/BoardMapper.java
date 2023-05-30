@@ -40,6 +40,14 @@ public class BoardMapper {
                 .build();
     }
 
+    public UserBoardResponseDto UserDtoFromEntity(Board board) {
+        return UserBoardResponseDto.builder()
+                .title(board.getTitle())
+                .content(board.getContent())
+                .updatedAt(board.getUpdatedAt())
+                .build();
+    }
+
     public List<BoardResponseDto> DtoListFromEntity(List<Board> boardList) {
         return boardList.stream()
                 .map(this::DtoFromEntity)

@@ -5,21 +5,28 @@ import com.mindspace.backend.domain.board.dto.BoardRequestDto;
 import com.mindspace.backend.domain.board.dto.BoardResponseDto;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.repository.BoardRepository;
+import com.mindspace.backend.domain.user.entity.User;
+import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+    private final UserRepository USER_REPOSITORY;
     private final BoardRepository BOARD_REPOSITORY;
     private final BoardMapper BOARD_MAPPER;
 
+    @Transactional
     public List<Board> getAllBoard(){
         return BOARD_REPOSITORY.findAll();
     }
 
+    @Transactional
     public Board createBoard(BoardRequestDto boardRequestDto, int userId, Integer nodeId) {
         nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
         BoardRequestDto updatedDto = BoardRequestDto.builder()
@@ -34,6 +41,7 @@ public class BoardService {
 
     private static final int DEFAULT_NODE_ID = 1;
 
+    @Transactional
     public void deleteBoard(int id) {
         Board board = IsBoardExisted(id);
         BOARD_REPOSITORY.deleteById(board.getId());
@@ -44,6 +52,7 @@ public class BoardService {
         return foundBaord;
     }
 
+    @Transactional
     public Board updateBoard(BoardRequestDto boardUpdate, int id) {
         Board board = IsBoardExisted(id);
         board.update(boardUpdate);
@@ -52,5 +61,14 @@ public class BoardService {
 
     public Board findOneBoard(int id) {
         return BOARD_REPOSITORY.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @Transactional
+    public Board findOneBoardByNodeIdAndUserId(int nodeId, int userId) {
+        User user = USER_REPOSITORY.findById(userId).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        return BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId);
     }
 }

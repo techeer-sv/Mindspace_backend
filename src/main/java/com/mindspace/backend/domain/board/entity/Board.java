@@ -9,6 +9,7 @@ import com.mindspace.backend.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
