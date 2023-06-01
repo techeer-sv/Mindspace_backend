@@ -36,7 +36,7 @@ public class BoardMapper {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .userNickname(board.getUser().getNickname())
-                .nodeId(board.getNode().getId())
+                .updatedAt(board.getUpdatedAt())
                 .build();
     }
 
@@ -44,6 +44,15 @@ public class BoardMapper {
         return UserBoardResponseDto.builder()
                 .title(board.getTitle())
                 .content(board.getContent())
+                .updatedAt(board.getUpdatedAt())
+                .build();
+    }
+
+    public AllBoardResponseDto AllDtoFromEntity(Board board) {
+        return AllBoardResponseDto.builder()
+                .id(board.getId())
+                .userNickname(board.getUser().getNickname())
+                .title(board.getTitle())
                 .updatedAt(board.getUpdatedAt())
                 .build();
     }

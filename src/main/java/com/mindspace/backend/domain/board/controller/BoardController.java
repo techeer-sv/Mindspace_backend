@@ -1,9 +1,6 @@
 package com.mindspace.backend.domain.board.controller;
 
-import com.mindspace.backend.domain.board.dto.BoardMapper;
-import com.mindspace.backend.domain.board.dto.BoardRequestDto;
-import com.mindspace.backend.domain.board.dto.BoardResponseDto;
-import com.mindspace.backend.domain.board.dto.UserBoardResponseDto;
+import com.mindspace.backend.domain.board.dto.*;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.service.BoardService;
 import com.mindspace.backend.domain.node.entity.Node;
@@ -32,29 +29,20 @@ public class BoardController {
     // 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<BoardResponseDto> getAllBoard(){
+    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id", required = false) Integer nodeId){
         List<Board> boardlist = BOARD_SERVICE.getAllBoard();
-        List<BoardResponseDto> boardResponseList = new ArrayList<>();
+        List<AllBoardResponseDto> boardResponseList = new ArrayList<>();
 
         for (Board board : boardlist) {
-            BoardResponseDto boardResponseDto = BOARD_MAPPER.DtoFromEntity(board);
-            boardResponseList.add(boardResponseDto);
+            AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
+            boardResponseList.add(allBoardResponseDto);
         }
-
         return boardResponseList;
     }
 
-    // 게시글 조회
-//    @GetMapping("/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public BoardResponseDto findOneBoard(@PathVariable int id){
-//        Board board = BOARD_SERVICE.findOneBoard(id);
-//        return BOARD_MAPPER.DtoFromEntity(board);
-//    }
-
     //“사용자”가 특정 노드 게시물 조회
     @GetMapping
-    public ResponseEntity<UserBoardResponseDto> findOneBoard(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
+    public ResponseEntity<UserBoardResponseDto> findOneBoardByNodeIdAndUserId(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
         User user = USER_REPOSITORY.findById(userId).orElse(null);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -66,6 +54,14 @@ public class BoardController {
         }
         UserBoardResponseDto userBoardResponseDto = BOARD_MAPPER.UserDtoFromEntity(board);
         return ResponseEntity.ok(userBoardResponseDto);
+    }
+
+    // “다른 사람”의 특정 노드 게시물 조회
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BoardResponseDto findOneBoard(@PathVariable int id){
+        Board board = BOARD_SERVICE.findOneBoard(id);
+        return BOARD_MAPPER.DtoFromEntity(board);
     }
 
     // 게시글 작성

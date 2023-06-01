@@ -5,5 +5,5 @@ import com.mindspace.backend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    Board findByNodeIdAndUserId(int nodeId, int userId);
+    Board findOneBoardByNodeIdAndUserId(int nodeId, int userId);
 }

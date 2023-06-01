@@ -69,6 +69,6 @@ public class BoardService {
         if (user == null) {
             return null;
         }
-        return BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId);
+        return BOARD_REPOSITORY.findOneBoardByNodeIdAndUserId(nodeId, userId);
     }
 }
