@@ -2,17 +2,16 @@ package com.mindspace.backend.domain.board.service;
 
 import com.mindspace.backend.domain.board.dto.BoardMapper;
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
-import com.mindspace.backend.domain.board.dto.BoardResponseDto;
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.board.repository.BoardRepository;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,11 @@ public class BoardService {
     @Transactional
     public List<Board> getAllBoard(){
         return BOARD_REPOSITORY.findAll();
+    }
+
+    @Transactional
+    public List<Board> getBoardByNodeId(int nodeId) {
+        return BOARD_REPOSITORY.findByNodeId(nodeId);
     }
 
     @Transactional
@@ -69,6 +73,10 @@ public class BoardService {
         if (user == null) {
             return null;
         }
-        return BOARD_REPOSITORY.findOneBoardByNodeIdAndUserId(nodeId, userId);
+        List<Board> boards = BOARD_REPOSITORY.findOneBoardByNodeIdAndUserId(nodeId, userId);
+        if (boards.isEmpty()) {
+            return null;
+        }
+        return boards.get(0);
     }
 }

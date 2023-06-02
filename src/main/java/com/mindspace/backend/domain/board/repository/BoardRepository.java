@@ -4,6 +4,10 @@ import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    Board findOneBoardByNodeIdAndUserId(int nodeId, int userId);
+    List<Board> findOneBoardByNodeIdAndUserId(int nodeId, int userId);
+    List<Board> findByNodeId(int nodeId);
 }

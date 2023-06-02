@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,20 +28,39 @@ public class BoardController {
     private final UserRepository USER_REPOSITORY;
 
     // 전체 게시글 조회
+//    @GetMapping("/all")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id") Integer nodeId){
+//        List<Board> boardlist = BOARD_SERVICE.getAllBoard();
+//        List<AllBoardResponseDto> boardResponseList = new ArrayList<>();
+//
+//        for (Board board : boardlist) {
+//            AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
+//            boardResponseList.add(allBoardResponseDto);
+//        }
+//        return boardResponseList;
+//    }
+
+    // 특정 노드에 대한 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id", required = false) Integer nodeId){
-        List<Board> boardlist = BOARD_SERVICE.getAllBoard();
-        List<AllBoardResponseDto> boardResponseList = new ArrayList<>();
+    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id") Integer nodeId) {
+        List<Board> boardList;
+        List<AllBoardResponseDto> allBoardResponseDtoList = new ArrayList<>();
 
-        for (Board board : boardlist) {
-            AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
-            boardResponseList.add(allBoardResponseDto);
+        if (nodeId != null) {
+            boardList = BOARD_SERVICE.getBoardByNodeId(nodeId);
+        } else {
+            boardList = BOARD_SERVICE.getAllBoard();
         }
-        return boardResponseList;
+        for (Board board : boardList) {
+            AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
+            allBoardResponseDtoList.add(allBoardResponseDto);
+        }
+        return allBoardResponseDtoList;
     }
 
-    //“사용자”가 특정 노드 게시물 조회
+    // 사용자의 특정 노드 게시물 조회
     @GetMapping
     public ResponseEntity<UserBoardResponseDto> findOneBoardByNodeIdAndUserId(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
         User user = USER_REPOSITORY.findById(userId).orElse(null);
@@ -56,7 +76,7 @@ public class BoardController {
         return ResponseEntity.ok(userBoardResponseDto);
     }
 
-    // “다른 사람”의 특정 노드 게시물 조회
+    // 다른 사람의 특정 노드 게시물 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BoardResponseDto findOneBoard(@PathVariable int id){
