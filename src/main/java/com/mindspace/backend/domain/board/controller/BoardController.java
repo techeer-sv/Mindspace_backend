@@ -26,21 +26,7 @@ public class BoardController {
     private final BoardService BOARD_SERVICE;
     private final BoardMapper BOARD_MAPPER;
     private final UserRepository USER_REPOSITORY;
-
-    // 전체 게시글 조회
-//    @GetMapping("/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id") Integer nodeId){
-//        List<Board> boardlist = BOARD_SERVICE.getAllBoard();
-//        List<AllBoardResponseDto> boardResponseList = new ArrayList<>();
-//
-//        for (Board board : boardlist) {
-//            AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
-//            boardResponseList.add(allBoardResponseDto);
-//        }
-//        return boardResponseList;
-//    }
-
+    
     // 특정 노드에 대한 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
