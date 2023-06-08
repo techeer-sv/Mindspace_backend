@@ -90,16 +90,16 @@ public class BoardController {
     // 게시글 삭제
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBoard(@PathVariable int id) {
-        BOARD_SERVICE.deleteBoard(id);
+    public void deleteBoard(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
+        BOARD_SERVICE.deleteBoard(nodeId);
     }
 
     // 게시글 수정
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BoardResponseDto> updateBoard(
-            @Valid @RequestBody BoardRequestDto boardUpdate, @PathVariable int id){
-        Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, id);
+            @Valid @RequestBody BoardRequestDto boardUpdate, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId){
+        Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, nodeId);
         return new ResponseEntity<>(BOARD_MAPPER.DtoFromEntity(updateBoard), HttpStatus.OK);
     }
 }
