@@ -1,40 +1,41 @@
 package com.mindspace.backend.global.exception;
 
-import com.mindspace.backend.global.exception.CustomException;
-import com.mindspace.backend.global.exception.ErrorResponse;
-import org.springframework.http.HttpStatus;
+import com.mindspace.backend.global.exception.common.CustomException;
+import com.mindspace.backend.global.exception.common.RequestNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// 2. @RestControllerAdvice를 사용하여 예외 처리를 한 후, ExceptionHandler를 정의하여 예외를 처리
-//@RestControllerAdvice
-//public class GlobalExceptionHandler {
-//    @ExceptionHandler(CustomException.class)
-//    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
-//        ErrorResponse errorResponse = new ErrorResponse(ex.getHttpStatus().value(), ex.getMessage());
-//        errorResponse.setMessage(ex.getMessage());
-//        return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
-//    }
-//
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//}
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getHttpStatus().value(), ex.getMessage());
-        errorResponse.setMessage(ex.getMessage());
-        return new ResponseEntity<>(errorResponse, ex.getHttpStatus());
+
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleRuntimeException(CustomException e) {
+        final ErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse response =
+                ErrorResponse.builder()
+                        .errorMessage(errorCode.getMessage())
+                        .errorCode(errorCode.getCode())
+                        .build();
+        log.warn(e.getMessage());
+        return ResponseEntity.status(errorCode.getStatus()).body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(RequestNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> handleNotFoundException(RequestNotFoundException e) {
+        final ErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse response = makeErrorResponse(errorCode);
+        log.warn(e.getMessage());
+        return new ResponseEntity<>(response, errorCode.getStatus());
+    }
+
+    private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
+        return ErrorResponse.builder()
+                .errorMessage(errorCode.getMessage())
+                .errorCode(errorCode.getCode())
+                .build();
     }
 }

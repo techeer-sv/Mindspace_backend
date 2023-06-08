@@ -1,19 +1,19 @@
 package com.mindspace.backend.global.exception;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-// 3. status code와 message를 담는 클래스
+@Builder
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ErrorResponse {
-    private final int statusCode;
-    private String message; //service단에서 각 예외에 맞게 변형될 수 있기 때문
+    private String errorCode;
+    private String errorMessage;
 
-    public ErrorResponse(int statusCode, String message) {
-        this.statusCode = statusCode;
-        this.message = message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    private ErrorResponse(ErrorCode code) {
+        this.errorCode = code.getCode();
+        this.errorMessage = code.getMessage();
     }
 }
