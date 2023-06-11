@@ -2,6 +2,7 @@ package com.mindspace.backend.domain.user.service;
 
 import com.mindspace.backend.domain.user.dto.*;
 import com.mindspace.backend.domain.user.entity.User;
+import com.mindspace.backend.domain.user.exception.*;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,14 @@ public class UserService {
 
     @Transactional
     public User signupUser(UserSignupRequestDto userSignupRequestDto){
+        if (USER_REPOSITORY.existsByEmail(userSignupRequestDto.getEmail())) {
+            throw new EmailDuplicateException();
+        }
+
+        if (USER_REPOSITORY.existsByNickname(userSignupRequestDto.getNickname())) {
+            throw new NickNameDuplicateException();
+        }
+
         return USER_REPOSITORY.save(USER_MAPPER.DtoToEntity(userSignupRequestDto));
     };
 
@@ -26,12 +35,12 @@ public class UserService {
         Optional<User> findByEmail = USER_REPOSITORY.findByEmail(userLoginRequestDto.getEmail());
 
         if (findByEmail.isEmpty()) {
-            throw new NullPointerException("해당 이메일로 가입한 사용자 없음");
+            throw new UserNotFoundException();
         }
 
         User user = findByEmail.get();
         if (!user.getPassword().equals(userLoginRequestDto.getPassword())) {
-            throw new NullPointerException("비밀번호 오류");
+            throw new InvalidPasswordException();
         }
 
         //todo : jwt token
