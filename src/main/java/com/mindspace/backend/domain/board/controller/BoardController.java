@@ -91,7 +91,7 @@ public class BoardController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteBoard(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
-        BOARD_SERVICE.deleteBoard(nodeId);
+        BOARD_SERVICE.deleteBoard(userId, nodeId);
     }
 
     // 게시글 수정
@@ -99,7 +99,7 @@ public class BoardController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BoardResponseDto> updateBoard(
             @Valid @RequestBody BoardRequestDto boardUpdate, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId){
-        Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, nodeId);
+        Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, userId, nodeId);
         return new ResponseEntity<>(BOARD_MAPPER.DtoFromEntity(updateBoard), HttpStatus.OK);
     }
 }

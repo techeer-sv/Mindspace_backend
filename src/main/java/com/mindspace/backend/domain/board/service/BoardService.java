@@ -46,19 +46,22 @@ public class BoardService {
     private static final int DEFAULT_NODE_ID = 1;
 
     @Transactional
-    public void deleteBoard(int id) {
-        Board board = IsBoardExisted(id);
+    public void deleteBoard(int userId, Integer nodeId) {
+        Board board = findByNodeIdAndUserId(userId, nodeId);
         BOARD_REPOSITORY.deleteById(board.getId());
     }
 
-    public Board IsBoardExisted(int id){
-        Board foundBaord = BOARD_REPOSITORY.findById(id).orElseThrow(NullPointerException::new);
-        return foundBaord;
+    public Board findByNodeIdAndUserId(int nodeId, int userId) {
+        List<Board> boards = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId);
+        if (boards.isEmpty()) {
+            throw new RuntimeException("Board not found");
+        }
+        return boards.get(0);
     }
 
     @Transactional
-    public Board updateBoard(BoardRequestDto boardUpdate, int id) {
-        Board board = IsBoardExisted(id);
+    public Board updateBoard(BoardRequestDto boardUpdate, int nodeId, int userId) {
+        Board board = findByNodeIdAndUserId(nodeId, userId);
         board.update(boardUpdate);
         return BOARD_REPOSITORY.save(board);
     }
