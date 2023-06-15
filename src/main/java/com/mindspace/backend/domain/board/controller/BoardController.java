@@ -88,14 +88,14 @@ public class BoardController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void deleteBoard(@RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
         BOARD_SERVICE.deleteBoard(userId, nodeId);
     }
 
     // 게시글 수정
-    @PutMapping("/{id}")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<BoardResponseDto> updateBoard(
             @Valid @RequestBody BoardRequestDto boardUpdate, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId){

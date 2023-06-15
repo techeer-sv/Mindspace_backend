@@ -25,7 +25,4 @@ public class Node extends Timestamp {
 
     @Column(name= "node_name", nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "node")
-    private List<Board> boards;
 }

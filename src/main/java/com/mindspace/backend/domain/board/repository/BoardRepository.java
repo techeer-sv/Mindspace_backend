@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findOneBoardByNodeIdAndUserId(int nodeId, int userId);
 
-    List<Board> findByNodeIdAndUserId(int nodeId, int userId);
+    Board findByNodeIdAndUserId(int nodeId, int userId);
 
     List<Board> findByNodeId(int nodeId);
 }

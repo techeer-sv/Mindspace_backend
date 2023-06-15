@@ -52,11 +52,8 @@ public class BoardService {
     }
 
     public Board findByNodeIdAndUserId(int nodeId, int userId) {
-        List<Board> boards = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId);
-        if (boards.isEmpty()) {
-            throw new RuntimeException("Board not found");
-        }
-        return boards.get(0);
+        Board boards = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId);
+        return boards;
     }
 
     @Transactional
