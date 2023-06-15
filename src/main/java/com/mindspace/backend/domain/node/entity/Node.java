@@ -2,6 +2,7 @@ package com.mindspace.backend.domain.node.entity;
 
 import com.mindspace.backend.domain.board.entity.Board;
 import com.mindspace.backend.global.common.Timestamp;
+import com.mindspace.backend.domain.board.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

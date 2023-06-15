@@ -10,11 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BoardResponseDto {
-
-    private int id;
-
-    private String userNickname;
+public class UserBoardResponseDto {
 
     private String title;
 

@@ -8,6 +8,10 @@ import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class BoardMapper {
@@ -33,7 +37,30 @@ public class BoardMapper {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .userNickname(board.getUser().getNickname())
-                .nodeId(board.getNode().getId())
+                .updatedAt(board.getUpdatedAt())
                 .build();
+    }
+
+    public UserBoardResponseDto UserDtoFromEntity(Board board) {
+        return UserBoardResponseDto.builder()
+                .title(board.getTitle())
+                .content(board.getContent())
+                .updatedAt(board.getUpdatedAt())
+                .build();
+    }
+
+    public AllBoardResponseDto AllDtoFromEntity(Board board) {
+        return AllBoardResponseDto.builder()
+                .id(board.getId())
+                .userNickname(board.getUser().getNickname())
+                .title(board.getTitle())
+                .updatedAt(board.getUpdatedAt())
+                .build();
+    }
+
+    public List<BoardResponseDto> DtoListFromEntity(List<Board> boardList) {
+        return boardList.stream()
+                .map(this::DtoFromEntity)
+                .collect(Collectors.toList());
     }
 }

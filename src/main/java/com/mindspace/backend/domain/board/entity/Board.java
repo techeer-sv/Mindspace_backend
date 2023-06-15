@@ -4,9 +4,12 @@ import com.mindspace.backend.domain.board.dto.BoardRequestDto;
 import com.mindspace.backend.domain.node.entity.Node;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.global.common.Timestamp;
+import com.mindspace.backend.domain.node.entity.Node;
+import com.mindspace.backend.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
