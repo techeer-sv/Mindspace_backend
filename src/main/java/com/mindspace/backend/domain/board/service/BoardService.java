@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -78,5 +78,10 @@ public class BoardService {
             return null;
         }
         return boards.get(0);
+    }
+
+    @Transactional
+    public List<Map<String, Object>> hasUserWrittenBoard(int userId) {
+        return BOARD_REPOSITORY.getNodeListWithWriteStatus(userId);
     }
 }
