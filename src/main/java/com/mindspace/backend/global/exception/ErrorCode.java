@@ -23,7 +23,10 @@ public enum ErrorCode {
     TITLE_NULL(HttpStatus.BAD_REQUEST, "B002", "제목을 입력해주세요."),
     CONTENT_NULL(HttpStatus.BAD_REQUEST, "B003", "내용을 입력해주세요."),
     NODE_ALREADY_WRITTEN(HttpStatus.CONFLICT, "B004", "이미 작성된 노드에 대한 작성 요청입니다."),
-    INVALID_POST_DELETE(HttpStatus.NOT_FOUND, "B005", "삭제할 수 없는 글이거나 이미 삭제된 글입니다.");
+    INVALID_POST_DELETE(HttpStatus.NOT_FOUND, "B005", "삭제할 수 없는 글이거나 이미 삭제된 글입니다."),
+
+    // Node
+    NODE_NOT_FOUND(HttpStatus.NOT_FOUND, "N001", "해당 노드를 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;
