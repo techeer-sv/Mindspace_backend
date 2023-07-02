@@ -80,8 +80,4 @@ public class BoardService {
         return boards.get(0);
     }
 
-    @Transactional
-    public List<Map<String, Object>> hasUserWrittenBoard(int userId) {
-        return BOARD_REPOSITORY.getNodeListWithWriteStatus(userId);
-    }
 }

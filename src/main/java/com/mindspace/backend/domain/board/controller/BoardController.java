@@ -102,10 +102,4 @@ public class BoardController {
         return new ResponseEntity<>(BOARD_MAPPER.DtoFromEntity(updateBoard), HttpStatus.OK);
     }
 
-    //유저가 전체 노드에 대해 글을 썼는지 유무 반환
-    @GetMapping("/check")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Map<String, Object>> hasUserWrittenBoard(@RequestHeader("Authorization") int userId){
-        return BOARD_SERVICE.hasUserWrittenBoard(userId);
-    }
 }
