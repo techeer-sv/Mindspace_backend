@@ -81,11 +81,11 @@ public class BoardService {
     public Board updateBoard(BoardRequestDto boardUpdate,int userId, int nodeId) {
         Board board = findByNodeIdAndUserId(nodeId, userId);
 
-        if (boardUpdate.getTitle() == null) {
+        if (boardUpdate.getTitle() == null || boardUpdate.getTitle().isEmpty()) {
             throw new TitleNullException();
         }
 
-        if (boardUpdate.getContent() == null) {
+        if (boardUpdate.getContent() == null || boardUpdate.getContent().isEmpty()) {
             throw new ContentNullException();
         }
 
