@@ -2,6 +2,8 @@ package com.mindspace.backend.domain.board.controller;
 
 import com.mindspace.backend.domain.board.dto.*;
 import com.mindspace.backend.domain.board.entity.Board;
+import com.mindspace.backend.domain.board.exception.BoardNotFoundException;
+import com.mindspace.backend.domain.board.exception.NodeNotFoundException;
 import com.mindspace.backend.domain.board.service.BoardService;
 import com.mindspace.backend.domain.node.entity.Node;
 import com.mindspace.backend.domain.node.repository.NodeRepository;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -29,19 +32,15 @@ public class BoardController {
     // 특정 노드에 대한 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<AllBoardResponseDto> getAllBoard(@RequestParam(value = "node_id") Integer nodeId) {
-        List<Board> boardList;
+    public List<AllBoardResponseDto> getAllBoard(@RequestParam("node_id") int nodeId) {
+        List<Board> boardList = BOARD_SERVICE.getAllBoard(nodeId);
         List<AllBoardResponseDto> allBoardResponseDtoList = new ArrayList<>();
 
-        if (nodeId != null) {
-            boardList = BOARD_SERVICE.getBoardByNodeId(nodeId);
-        } else {
-            boardList = BOARD_SERVICE.getAllBoard();
-        }
         for (Board board : boardList) {
             AllBoardResponseDto allBoardResponseDto = BOARD_MAPPER.AllDtoFromEntity(board);
             allBoardResponseDtoList.add(allBoardResponseDto);
         }
+
         return allBoardResponseDtoList;
     }
 
@@ -72,11 +71,7 @@ public class BoardController {
     // 게시글 작성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId, @RequestParam(value = "node_id", required = false) Integer nodeId) {
-        if (nodeId == null) {
-            throw new IllegalArgumentException("node_id is required");
-        }
-
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId, @RequestParam("node_id") int nodeId) {
         Node node = NODE_REPOSITORY.findById(nodeId).orElse(null);
         if (node == null) {
             throw new IllegalArgumentException("Invalid node_id: " + nodeId);
