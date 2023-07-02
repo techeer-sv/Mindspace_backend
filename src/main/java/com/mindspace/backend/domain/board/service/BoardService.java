@@ -3,7 +3,10 @@ package com.mindspace.backend.domain.board.service;
 import com.mindspace.backend.domain.board.dto.BoardMapper;
 import com.mindspace.backend.domain.board.dto.BoardRequestDto;
 import com.mindspace.backend.domain.board.entity.Board;
+import com.mindspace.backend.domain.board.exception.*;
 import com.mindspace.backend.domain.board.repository.BoardRepository;
+import com.mindspace.backend.domain.node.entity.Node;
+import com.mindspace.backend.domain.node.repository.NodeRepository;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,23 +19,36 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+    private final NodeRepository NODE_REPOSITORY;
     private final UserRepository USER_REPOSITORY;
     private final BoardRepository BOARD_REPOSITORY;
     private final BoardMapper BOARD_MAPPER;
 
     @Transactional
-    public List<Board> getAllBoard(){
-        return BOARD_REPOSITORY.findAll();
-    }
-
-    @Transactional
-    public List<Board> getBoardByNodeId(int nodeId) {
-        return BOARD_REPOSITORY.findByNodeId(nodeId);
+    public List<Board> getAllBoard(int nodeId) {
+        Node node = NODE_REPOSITORY.findById(nodeId)
+                .orElseThrow(() -> new NodeNotFoundException());
+        List<Board> boards = BOARD_REPOSITORY.findByNode(node);
+        return boards;
     }
 
     @Transactional
     public Board createBoard(BoardRequestDto boardRequestDto, int userId, Integer nodeId) {
         nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
+
+        if (boardRequestDto.getTitle() == null || boardRequestDto.getTitle().isEmpty()) {
+            throw new TitleNullException();
+        }
+
+        if (boardRequestDto.getContent() == null || boardRequestDto.getContent().isEmpty()) {
+            throw new ContentNullException();
+        }
+
+        boolean boardExists = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId) != null;
+        if (boardExists) {
+            throw new NodeAlreadyWrittenException();
+        }
+
         BoardRequestDto updatedDto = BoardRequestDto.builder()
                 .title(boardRequestDto.getTitle())
                 .content(boardRequestDto.getContent())
@@ -47,7 +63,12 @@ public class BoardService {
 
     @Transactional
     public void deleteBoard(int userId, Integer nodeId) {
-        Board board = findByNodeIdAndUserId(userId, nodeId);
+        Board board = findByNodeIdAndUserId(nodeId, userId);
+
+        if (board == null) {
+            throw new InvalidPostDeleteException();
+        }
+
         BOARD_REPOSITORY.deleteById(board.getId());
     }
 
@@ -57,25 +78,34 @@ public class BoardService {
     }
 
     @Transactional
-    public Board updateBoard(BoardRequestDto boardUpdate, int nodeId, int userId) {
+    public Board updateBoard(BoardRequestDto boardUpdate,int userId, int nodeId) {
         Board board = findByNodeIdAndUserId(nodeId, userId);
+
+        if (boardUpdate.getTitle() == null) {
+            throw new TitleNullException();
+        }
+
+        if (boardUpdate.getContent() == null) {
+            throw new ContentNullException();
+        }
+
         board.update(boardUpdate);
         return BOARD_REPOSITORY.save(board);
     }
 
     public Board findOneBoard(int id) {
-        return BOARD_REPOSITORY.findById(id).orElseThrow(RuntimeException::new);
+        return BOARD_REPOSITORY.findById(id).orElseThrow(BoardNotFoundException::new);
     }
 
     @Transactional
     public Board findOneBoardByNodeIdAndUserId(int nodeId, int userId) {
         User user = USER_REPOSITORY.findById(userId).orElse(null);
         if (user == null) {
-            return null;
+            throw new BoardNotFoundException();
         }
         List<Board> boards = BOARD_REPOSITORY.findOneBoardByNodeIdAndUserId(nodeId, userId);
         if (boards.isEmpty()) {
-            return null;
+            throw new BoardNotFoundException();
         }
         return boards.get(0);
     }
