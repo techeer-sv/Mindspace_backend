@@ -1,44 +1,21 @@
-package com.mindspace.backend.domain.board.entity;
+package com.mindspace.backend.domain.link.entity;
 
-import com.mindspace.backend.domain.board.dto.BoardRequestDto;
-import com.mindspace.backend.domain.node.entity.Node;
-import com.mindspace.backend.domain.user.entity.User;
-import com.mindspace.backend.global.common.Timestamp;
-import com.mindspace.backend.domain.node.entity.Node;
-import com.mindspace.backend.domain.user.entity.User;
-import lombok.*;
-
+import lombok.Getter;
+import org.springframework.data.neo4j.core.schema.NodeEntity;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
-@Entity
 @Getter
-@NoArgsConstructor
-@Table(name="board")
-@Builder
-@AllArgsConstructor
-public class Board extends Timestamp {
+@NodeEntity
+public class Link {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "board_id")
+    @Column(name = "link_id")
     private int id;
 
-    @Column(name="title", nullable = false)
-    private String title;
+    @Column(name="source", nullable = false)
+    private String source;
 
-    @Column(name="content", nullable = false)
-    private String content;
+    @Column(name="target", nullable = false)
+    private String target;
 
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "node_id", referencedColumnName = "node_id")
-    private Node node;
-
-    public void update(BoardRequestDto boardUpdate) {
-        this.title = boardUpdate.getTitle();
-        this.content = boardUpdate.getContent();
-    }
 }

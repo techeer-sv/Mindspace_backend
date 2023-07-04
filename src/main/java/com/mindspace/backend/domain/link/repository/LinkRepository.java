@@ -1,16 +1,7 @@
-package com.mindspace.backend.domain.board.repository;
+package com.mindspace.backend.domain.link.repository;
 
-import com.mindspace.backend.domain.board.entity.Board;
-import com.mindspace.backend.domain.user.entity.User;
+import com.mindspace.backend.domain.link.entity.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface BoardRepository extends JpaRepository<Board, Integer> {
-    List<Board> findOneBoardByNodeIdAndUserId(int nodeId, int userId);
-
-    Board findByNodeIdAndUserId(int nodeId, int userId);
-
-    List<Board> findByNodeId(int nodeId);
+public interface LinkRepository extends JpaRepository<Link, Integer> {
 }
