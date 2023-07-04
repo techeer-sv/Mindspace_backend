@@ -25,6 +25,10 @@ dependencies {
 //	mysql db 연동
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'com.mysql:mysql-connector-j'
+
+	//Neo4J 연동
+	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+	implementation 'org.neo4j.driver:neo4j-java-driver'
 }
 
 tasks.named('test') {

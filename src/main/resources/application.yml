@@ -1,6 +1,7 @@
 profiles:
   default: local
 spring:
+
   datasource:
     include:
 #      - docker
@@ -9,7 +10,11 @@ spring:
 #    username: root
 #    password: password
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-
+  data:
+    neo4j:
+      uri: bolt://localhost:7687
+      username: neo4j
+      password: password
 
   jpa:
     database: mysql
