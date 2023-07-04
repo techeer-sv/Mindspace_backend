@@ -30,11 +30,11 @@ public class Board extends Timestamp {
     private String content;
 
     @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id")
+    @JoinColumn(name="user", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "node_id", referencedColumnName = "node_id")
+    @JoinColumn(name = "node", referencedColumnName = "node_id")
     private Node node;
 
     public void update(BoardRequestDto boardUpdate) {
