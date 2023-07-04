@@ -16,7 +16,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     List<Board> findByNodeId(int nodeId);
 
-    @Query("SELECT new map(n.id AS id, CASE WHEN b.id IS NULL THEN false ELSE true END AS is_written ,n.name AS name) " +
+    @Query("SELECT new map(n.id AS id, CASE WHEN b.id IS NULL THEN false ELSE true END AS isWritten ,n.name AS name) " +
             "FROM Node n " +
             "LEFT JOIN Board b " +
             "ON n = b.node " +
