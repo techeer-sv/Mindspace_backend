@@ -8,7 +8,6 @@ import com.mindspace.backend.domain.node.repository.NodeRepository;
 import com.mindspace.backend.domain.user.entity.User;
 import com.mindspace.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class BoardController {
     private final BoardService BOARD_SERVICE;
     private final BoardMapper BOARD_MAPPER;
     private final UserRepository USER_REPOSITORY;
-    
+
     // 특정 노드에 대한 전체 게시글 조회
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
@@ -102,4 +101,5 @@ public class BoardController {
         Board updateBoard = BOARD_SERVICE.updateBoard(boardUpdate, userId, nodeId);
         return new ResponseEntity<>(BOARD_MAPPER.DtoFromEntity(updateBoard), HttpStatus.OK);
     }
+
 }
