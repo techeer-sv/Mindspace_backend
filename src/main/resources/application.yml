@@ -1,20 +1,24 @@
 profiles:
   default: local
 spring:
+  data:
+    neo4j:
+      uri: neo4j://localhost:7687
+      username: neo4j
+      password: test1234
   datasource:
     include:
-#      - docker
+      #      - docker
       - local
-#    url: jdbc:mysql://mysql:3306/mindspace?useUnicode=true&useSSL=false&createDatabaseIfNotExist=true&characterSetResults=UTF-8&characterEncoding=UTF-8&useLegacyDatetimeCode=false
-#    username: root
-#    password: password
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-
+  #    url: jdbc:mysql://mysql:3306/mindspace?useUnicode=true&useSSL=false&createDatabaseIfNotExist=true&characterSetResults=UTF-8&characterEncoding=UTF-8&useLegacyDatetimeCode=false
+  #    username: root
+  #    password: password
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     database: mysql
-#    defer-datasource-initialization: true
-#    database-platform: org.hibernate.dialect.MySQL8Dialect
+    #    defer-datasource-initialization: true
+    #    database-platform: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
     show-sql: true
     properties:
