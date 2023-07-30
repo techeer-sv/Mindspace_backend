@@ -83,8 +83,13 @@ public class BoardService {
 
 
     @Transactional
-    public Board updateBoard(BoardRequestDto boardUpdate,int userId, int nodeId) {
+    public Board updateBoard(BoardRequestDto boardUpdate, int userId, int nodeId) {
+        
+        // 해당 노드에 게시글이 존재하는지 확인
         Board board = findByNodeIdAndUserId(nodeId, userId);
+        if (board == null) {
+            throw new BoardNotFoundException();
+        }
 
         if (boardUpdate.getTitle() == null || boardUpdate.getTitle().isEmpty()) {
             throw new TitleNullException();
@@ -97,6 +102,9 @@ public class BoardService {
         board.update(boardUpdate);
         return BOARD_REPOSITORY.save(board);
     }
+
+
+
 
 
     public Board findOneBoard(int id) {

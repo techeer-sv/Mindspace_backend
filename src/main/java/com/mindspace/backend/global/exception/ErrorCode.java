@@ -19,7 +19,7 @@ public enum ErrorCode {
     USER_LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED,"U005","로그인이 필요합니다."),
 
     // BOARD
-    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "B001", "해당 게시글 찾을 수 없습니다."),
+    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "B001", "해당 게시글을 찾을 수 없습니다."),
     TITLE_NULL(HttpStatus.BAD_REQUEST, "B002", "제목을 입력해주세요."),
     CONTENT_NULL(HttpStatus.BAD_REQUEST, "B003", "내용을 입력해주세요."),
     NODE_ALREADY_WRITTEN(HttpStatus.CONFLICT, "B004", "이미 작성된 노드에 대한 작성 요청입니다."),
