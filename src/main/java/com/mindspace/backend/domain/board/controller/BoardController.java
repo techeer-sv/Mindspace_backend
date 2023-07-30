@@ -74,7 +74,7 @@ public class BoardController {
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto boardRequestDto, @RequestHeader("Authorization") int userId, @RequestParam("node_id") int nodeId) {
         Node node = NODE_REPOSITORY.findById(nodeId).orElse(null);
         if (node == null) {
-            throw new IllegalArgumentException("Invalid node_id: " + nodeId);
+            throw new NodeNotFoundException();
         }
 
         Board createResult = BOARD_SERVICE.createBoard(boardRequestDto, userId, nodeId);

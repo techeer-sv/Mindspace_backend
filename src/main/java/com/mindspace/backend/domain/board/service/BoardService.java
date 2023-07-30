@@ -26,15 +26,23 @@ public class BoardService {
 
     @Transactional
     public List<Board> getAllBoard(int nodeId) {
-        Node node = NODE_REPOSITORY.findById(nodeId)
-                .orElseThrow(() -> new NodeNotFoundException());
+        Node node = NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
         List<Board> boards = BOARD_REPOSITORY.findByNode(node);
         return boards;
     }
 
+
     @Transactional
     public Board createBoard(BoardRequestDto boardRequestDto, int userId, Integer nodeId) {
         nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
+
+        // 노드가 데이터베이스에 존재하는지 확인
+        Node node = NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
+
+        boolean boardExists = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId) != null;
+        if (boardExists) {
+            throw new NodeAlreadyWrittenException();
+        }
 
         if (boardRequestDto.getTitle() == null || boardRequestDto.getTitle().isEmpty()) {
             throw new TitleNullException();
@@ -42,11 +50,6 @@ public class BoardService {
 
         if (boardRequestDto.getContent() == null || boardRequestDto.getContent().isEmpty()) {
             throw new ContentNullException();
-        }
-
-        boolean boardExists = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId) != null;
-        if (boardExists) {
-            throw new NodeAlreadyWrittenException();
         }
 
         BoardRequestDto updatedDto = BoardRequestDto.builder()
@@ -60,6 +63,7 @@ public class BoardService {
     }
 
     private static final int DEFAULT_NODE_ID = 1;
+
 
     @Transactional
     public void deleteBoard(int userId, Integer nodeId) {
@@ -77,6 +81,7 @@ public class BoardService {
         return boards;
     }
 
+
     @Transactional
     public Board updateBoard(BoardRequestDto boardUpdate,int userId, int nodeId) {
         Board board = findByNodeIdAndUserId(nodeId, userId);
@@ -93,9 +98,11 @@ public class BoardService {
         return BOARD_REPOSITORY.save(board);
     }
 
+
     public Board findOneBoard(int id) {
         return BOARD_REPOSITORY.findById(id).orElseThrow(BoardNotFoundException::new);
     }
+
 
     @Transactional
     public Board findOneBoardByNodeIdAndUserId(int nodeId, int userId) {
