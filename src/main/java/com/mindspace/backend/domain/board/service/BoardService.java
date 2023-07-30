@@ -37,7 +37,7 @@ public class BoardService {
         nodeId = nodeId != null ? nodeId : DEFAULT_NODE_ID;
 
         // 노드가 데이터베이스에 존재하는지 확인
-        Node node = NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
+        NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
 
         boolean boardExists = BOARD_REPOSITORY.findByNodeIdAndUserId(nodeId, userId) != null;
         if (boardExists) {
@@ -86,7 +86,7 @@ public class BoardService {
     public Board updateBoard(BoardRequestDto boardUpdate, int userId, int nodeId) {
 
         // 노드가 데이터베이스에 존재하는지 확인
-        Node node = NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
+        NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
 
         // 해당 노드에 게시글이 존재하는지 확인
         Board board = findByNodeIdAndUserId(nodeId, userId);
@@ -118,6 +118,10 @@ public class BoardService {
     @Transactional
     public Board findOneBoardByNodeIdAndUserId(int nodeId, int userId) {
         User user = USER_REPOSITORY.findById(userId).orElse(null);
+
+        // 노드가 데이터베이스에 존재하는지 확인
+        NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
+
         if (user == null) {
             throw new BoardNotFoundException();
         }
