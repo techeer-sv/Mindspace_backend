@@ -84,7 +84,10 @@ public class BoardService {
 
     @Transactional
     public Board updateBoard(BoardRequestDto boardUpdate, int userId, int nodeId) {
-        
+
+        // 노드가 데이터베이스에 존재하는지 확인
+        Node node = NODE_REPOSITORY.findById(nodeId).orElseThrow(() -> new NodeNotFoundException());
+
         // 해당 노드에 게시글이 존재하는지 확인
         Board board = findByNodeIdAndUserId(nodeId, userId);
         if (board == null) {
