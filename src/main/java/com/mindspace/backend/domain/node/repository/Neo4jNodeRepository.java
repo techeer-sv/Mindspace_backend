@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface Neo4jNodeRepository extends Neo4jRepository<Neo4jNode, Long> {
     // 시작 노드와 종료 노드의 ID 값을 반환
-    @Query("MATCH (n1)-[r]->(n2) RETURN id(n1) as source, id(n2) as target")
+    @Query("MATCH (n1:Node)-[r]->(n2:Node) RETURN id(n1) + 1 as source, id(n2) + 1 as target")
     List<Link> findAllLinks();
+    
 }
