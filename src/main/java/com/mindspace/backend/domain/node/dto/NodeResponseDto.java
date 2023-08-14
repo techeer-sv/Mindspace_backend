@@ -8,6 +8,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class NodeResponseDto {
-    private Integer id;
+    private Long id;
     private String name;
 }

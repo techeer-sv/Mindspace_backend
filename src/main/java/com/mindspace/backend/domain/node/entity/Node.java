@@ -16,13 +16,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name= "node")
+@Table(name = "node")
 public class Node extends Timestamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "node_id")
     private int id;
 
-    @Column(name= "node_name", nullable = false)
+    @Column(name = "node_name", nullable = false)
     private String name;
 }

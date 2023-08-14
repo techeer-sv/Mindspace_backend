@@ -1,7 +1,15 @@
 package com.mindspace.backend.domain.node.entity;
 
 import org.neo4j.ogm.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @RelationshipEntity(type = "LINKS_TO")
 public class Link {
 
@@ -9,10 +17,10 @@ public class Link {
     @GeneratedValue
     private Long id;
 
-    @StartNode
-    private Neo4jNode startNode;
+    @Property(name="source")
+    private Long source;
 
-    @EndNode
-    private Neo4jNode endNode;
-
+    @Property(name="target")
+    private Long target;
 }
+
