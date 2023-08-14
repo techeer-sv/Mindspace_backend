@@ -16,5 +16,5 @@ import lombok.Setter;
 @Builder
 public class NodeInfoResponse {
     private List<Map<String, Object>> nodes;
-    private List<Link> links;
+    private List<NodeLinkDto> links; 
 }
