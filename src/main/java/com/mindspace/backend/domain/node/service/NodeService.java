@@ -5,15 +5,11 @@ import com.mindspace.backend.domain.node.dto.NodeInfoResponse;
 import com.mindspace.backend.domain.node.dto.NodeLinkDto;
 import com.mindspace.backend.domain.node.dto.NodeMapper;
 import com.mindspace.backend.domain.node.entity.Link;
-import com.mindspace.backend.domain.node.entity.Neo4jNode;
 import com.mindspace.backend.domain.node.entity.Node;
 import com.mindspace.backend.domain.node.repository.Neo4jNodeRepository;
 import com.mindspace.backend.domain.node.repository.NodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.mindspace.backend.domain.node.dto.NodeInfoResponse;
-
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

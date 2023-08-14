@@ -1,6 +1,5 @@
 package com.mindspace.backend.domain.node.dto;
 
-import com.mindspace.backend.domain.node.dto.NodeLinkDto;
 import com.mindspace.backend.domain.node.entity.Link;
 import org.springframework.stereotype.Component;
 
