@@ -139,3 +139,7 @@ build/tmp/**
 # vscode setting
 .idea/*.xml
 .idea/.name
+
+
+#neo4J 
+neo4j/data/

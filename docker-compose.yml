@@ -9,7 +9,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     command: # 명령어 실행
       - --character-set-server=utf8mb4
@@ -17,41 +17,38 @@ services:
     volumes:
       - mindspace-db:/usr/src/mysql
 
+  neo4j:
+    container_name: neo4j
+    image: neo4j:latest
+    restart: always
+    environment:
+      NEO4J_AUTH: neo4j/test1234
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+
   backend:
     container_name: backend
-##      mindspace_backend에서 확인할 때
+    ##      mindspace_backend에서 확인할 때
     build: .
-##     서브 모듈에서 확인할때 !docker-compose를 최상위 폴더로 빼야한다!
-#    build:
-#       context: ./Mindspace_backend
-#       Dockerfile: Dockerfile
+    ##     서브 모듈에서 확인할때 !docker-compose를 최상위 폴더로 빼야한다!
+    #    build:
+    #       context: ./Mindspace_backend
+    #       Dockerfile: Dockerfile
     environment:
-       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mindspace
-       SPRING_DATASOURCE_USER: root
-       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mindspace
+      SPRING_DATASOURCE_USER: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
     expose:
-       - 8080
+      - 8080
     ports:
-       - "8080:8080"
+      - "8080:8080"
     depends_on:
-       - mysql
-
-#  frontend:
-#    container_name: frontend
-#    restart: unless-stopped
-#    build:
-#      context: ./Mindspace_front
-#    command: ["yarn", "start"]
-#    ports:
-#      - 3000:3000
-#    volumes:
-#      - ./Mindspace_front/:/frontend/
-#      - ./Mindspace_front/node_modules/:/frontend/node_modules
-#    environment:
-#      - CI=true
-#      - CHOKIDAR_USEPOLLING=true
-#      - REACT_APP_BACKEND_URL=http://localhost:8000
-#    tty: true
+      - mysql
+      - neo4j
 
 volumes:
   mindspace-db:

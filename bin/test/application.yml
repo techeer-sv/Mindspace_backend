@@ -1,0 +1,19 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8DBDialect
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: create
+      generate-ddl: true
+
+  datasource:
+    url: jdbc:h2:~/mindspace;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
