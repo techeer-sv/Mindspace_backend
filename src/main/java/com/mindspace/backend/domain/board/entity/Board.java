@@ -26,7 +26,10 @@ public class Board extends Timestamp {
     @Column(name="title", nullable = false)
     private String title;
 
-    @Column(name="content", nullable = false)
+//    @Column(name="content", nullable = false)
+//    private String content;
+
+    @Column(name = "content", nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
     @OneToOne
